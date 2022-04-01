@@ -18,15 +18,10 @@
 
 using namespace std;
 unsigned char image[SIZE][SIZE];
-unsigned char mergeimage[SIZE][SIZE];
 unsigned char saveimage[SIZE][SIZE];
 
-
-void loadImage ();
-void saveImage ();
-void black_white ();
 void mainmessage();
-void loadMergeImage();
+
 int main()
 {
   mainmessage();
@@ -46,18 +41,6 @@ void loadImage () {
    readGSBMP(imageFileName, image);
 }
 //_________________________________________
-void loadMergeImage() {
-   char mergeimageFileName[100];
-
-   // Get gray scale image file name
-   cout << "Please enter name of image file to merge with: ";
-   cin >> mergeimageFileName;
-
-   // Add to it .bmp extension and load image
-   strcat (mergeimageFileName, ".bmp");
-   readGSBMP(mergeimageFileName, mergeimage);
-}
-//_________________________________________
 void saveImage () {
    char imageFileName[100];
 
@@ -70,7 +53,9 @@ void saveImage () {
    writeGSBMP(imageFileName, saveimage);
 }
 
+//               FILTERS
 //_________________________________________
+
 void black_white() {
   for (int i = 0; i < SIZE; i++) {
     for (int j = 0; j< SIZE; j++) {
@@ -81,17 +66,9 @@ void black_white() {
     }
   }
 }
+
 //_________________________________________
-void merge_photo() {
-    for (int i = 0; i < SIZE; i++)
-    {
-        for (int j = 0; j < SIZE ;j++)
-        {
-        saveimage[i][j] = ((image[i][j])+(mergeimage[i][j]))/2;
-        }
-    }
-}
-//_________________________________________
+
 void enlarge_photo() {
     int choose;
     cout << "Which quarter to enlarge 1, 2, 3 or 4\n=>";
@@ -145,7 +122,9 @@ void enlarge_photo() {
     }
 
 }
+
 //_________________________________________
+
 void invert_photo() {
     for (int i = 0; i < SIZE; i++)
     {
@@ -155,140 +134,9 @@ void invert_photo() {
         }
     }
 }
-//_________________________________________
-void flip_photo() {
-    string choose;
-    int z = 0 ;
-    cout << "   Horizontally [H] or Vertically [V] !?\n=>";
-    cin >> choose;
-    if (choose == "H"){
-        for (int i = 256; i >= 0; i--)
-        {
-            for (int j = 0; j < SIZE ;j++)
-            {
-                saveimage[z][j] = (image[i][j]);
-            }
-            z++;
-        }
-    }else if (choose == "V"){
-        for (int i = 0; i < SIZE; i++)
-        {
-            for (int j = 256,y = 0; j >= 0 ;j-- , y++)
-            {
-                saveimage[i][y] = (image[i][j]);
-            }
-        }
-    }else{
-        cout << "BAD INPUT ! (Make Sure you add H or V)";
-        return flip_photo();
-    }
-}
-//_________________________________________
-void rotate_photo() {
-    int choose;
-    int z = 0 ;
-    cout << "Rotate (90), (180) or (360) degrees?\n=>";
-    cin >> choose;
-    if (choose == 180){
-        for (int i = 256; i >= 0; i--)
-        {
-            for (int j = 0; j < SIZE ;j++)
-            {
-                saveimage[z][j] = (image[i][256-j]);
-            }
-            z++;
-        }
-    }
-    else if (choose == 270){
-        for (int i = 0; i < SIZE; i++)
-        {
-            for (int j = 256, y = 0 ; j >= 0 ; j-- , y++)
-            {
-                saveimage[i][y] = (image[j][i]);
-            }
-        }
-    }
-    else if (choose == 90){
-        for (int i = 0; i < SIZE; i++)
-        {
-            for (int j = 0; j < SIZE ;j++)
-            {
-                saveimage[i][j] = (image[j][256-i]);
-            }
-        }
-    }
-    else{
-        cout << "BAD INPUT !";
-        return rotate_photo();
-    }
-}
 
 //_________________________________________
-void mirror_image(){
-    string choose;
-    cout << "Left,Right,Upper or Lower mirror?\n=>";
-    cin >> choose;
-    if (choose == "Right")
-    {
-        for (int i=0; i<SIZE; i++)
-        {
-          for (int j=0; j<SIZE; j++)
-          {
-             saveimage[i][j] = image[i][256-j];
-          }
-        }
-    }
-    else if (choose == "Lower")
-    {
-        for (int i=0; i<SIZE; i++)
-        {
-            for (int j=0; j<SIZE; j++)
-            {
-                 saveimage[i][j] = image[256-i][j];
-            }
-        }
-    }
-    else if (choose == "Left")
-    {
-        for (int i=0; i<SIZE; i++)
-        {
-            for (int j=0 ,y=0; j<SIZE; j++,y++)
-            {
-               if (j < 128)
-                {
-                    saveimage[i][y] = image[i][j];
-                }
-                else
-                {
-                    saveimage[i][y] = image[i][256-j];
-                }
-            }
-        }
-    }
-    else if (choose == "Upper")
-    {
-        for (int i=0,y=0; i<SIZE; i++,y++)
-        {
-            for (int j=0 ; j<SIZE; j++)
-            {
-               if (i < 128)
-                {
-                    saveimage[y][j] = image[i][j];
-                }
-                else
-                {
-                    saveimage[y][j] = image[256-i][j];
-                }
-            }
-        }
-    }else
-    {
-        cout << "BAD INPUT !"<<endl;
-        return mirror_image();
-    }
 
-}
-//_________________________________________
 void mainmessage(){
     string choosing;
     while(true)
@@ -330,40 +178,11 @@ void mainmessage(){
             saveImage();
             break;
         }
-        else if (choosing == "3")
-        {
-            cout << "=> Merge Filter" << endl;
-            loadImage();
-            loadMergeImage();
-            merge_photo();
-            saveImage();
-            break;
-        }else if (choosing == "4")
-        {
-            cout << "=> Flip Image" << endl;
-            loadImage();
-            flip_photo();
-            saveImage();
-            break;
-        }else if (choosing == "6")
-        {
-            cout << "=> Rotate Image" << endl;
-            loadImage();
-            rotate_photo();
-            saveImage();
-            break;
-        }else if (choosing == "8")
+        else if (choosing == "8")
         {
             cout << "=> Enlarge Image" << endl;
             loadImage();
             enlarge_photo();
-            saveImage();
-            break;
-        }else if (choosing == "a")
-        {
-            cout << "=> Mirror 1/2 Image" << endl;
-            loadImage();
-            mirror_image();
             saveImage();
             break;
         }else
