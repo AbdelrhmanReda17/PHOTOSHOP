@@ -119,6 +119,10 @@ void enlarge_photo() {
 
             }
         }
+    }else
+    {
+        cout << "BAD INPUT " <<endl;
+        return enlarge_photo();
     }
 
 }
@@ -134,7 +138,185 @@ void invert_photo() {
         }
     }
 }
+//_________________________________________
+void first_quarter(int quarter)
+{
+    int y = 128;
+    for (int i = 0; i < 128 ; i++)
+    {
+        int x = 128;
+        for (int j = 0 ; j < 128 ;j++)
+        {
+            if (quarter == 0)
+            {
+                saveimage[i][j] = image[i][j];
+            }
+            else if (quarter == 1)
+            {
+                saveimage[i][x] = image[i][j];
+                x++;
+            }
+            else if (quarter == 2)
+            {
+                saveimage[y][j] = image[i][j];
+            }
+            else if (quarter == 3)
+            {
+                saveimage[y][x] = image[i][j];
+                x++;
+            }
+        }
+    y++;
+    }
+}
+void second_quarter(int quarter)
+{
+    int y = 128;
+    for (int i = 0; i < 128 ; i++)
+    {
+        int x = 128;
+        int l = 0;
+        for (int j = 128 ; j <= 256 ;j++)
+        {
+            if (quarter == 1)
+            {
+                saveimage[i][j] = image[i][j];
+            }
+            else if (quarter == 0)
+            {
+                saveimage[i][l] = image[i][j];
+                l++;
+            }
+            else if (quarter == 3)
+            {
+                saveimage[y][j] = image[i][j];
+            }
+            else if (quarter == 2)
+            {
+                saveimage[y][l] = image[i][j];
+                l++;
+            }
+        }
+    y++;
+    }
+}
+void third_quarter(int quarter)
+{
+    int y = 0;
+    for (int i = 128; i <= 256 ; i++)
+    {
+        int x = 128;
+        int l = 0;
+        for (int j = 0 ; j < 128 ;j++)
+        {
+            if (quarter == 2)
+            {
+                saveimage[i][j] = image[i][j];
+            }
+            else if (quarter == 3)
+            {
+                saveimage[i][x] = image[i][j];
+                x++;
+            }
+            else if (quarter == 0)
+            {
+                saveimage[y][l] = image[i][j];
+                l++;
+            }
+            else if (quarter == 1)
+            {
+                saveimage[y][x] = image[i][j];
+                x++;
+            }
+        }
+    y++;
+    }
+}
+void fourth_quarter(int quarter)
+{
+    int y = 0;
+    for (int i = 128; i <= 256 ; i++)
+    {
+        int x = 0;
+        int l = 128;
+        for (int j = 128 ; j <= 256 ;j++)
+        {
+            if (quarter == 3)
+            {
+                saveimage[i][j] = image[i][j];
+            }
+            else if (quarter == 2)
+            {
+                saveimage[i][x] = image[i][j];
+                x++;
+            }
+            else if (quarter == 0)
+            {
+                saveimage[y][x] = image[i][j];
+                x++;
+            }
+            else if (quarter == 1)
+            {
+                saveimage[y][l] = image[i][j];
+                l++;
+            }
+        }
+    y++;
+    }
+}
 
+void shuffle_photo() {
+    string arr ={'1','2','3','4'};
+    int check = 0;
+    string choose;
+    cout << "Enter New order of quarters : ";
+    cin >> choose;
+    for (int i = 0 ; i < choose.length() ;i++)
+        {
+        for (int y = 0 ; y < 4 ; y++)
+            {
+                if ( choose[0] != choose[1] && choose[0] != choose[2] && choose[0] != choose[3])
+                {
+                    if (choose[1] != choose[2] && choose[1] != choose[3] && choose[2] != choose[3])
+                    {
+                        if ( choose[i] == arr[y])
+                        {
+                                check += 1;
+                                continue;
+                        }
+                    }
+                }
+            }
+        }
+    if (check == 4)
+    {
+        for ( int i = 0 ; i < choose.length() ; i++)
+        {
+            if (choose[i] == '1' )
+            {
+                first_quarter(i);
+            }
+            else if (choose[i] == '2' )
+            {
+                second_quarter(i);
+            }
+            else if (choose[i] == '3' )
+            {
+                third_quarter(i);
+            }
+            else if (choose[i] == '4' )
+            {
+                fourth_quarter(i);
+            }
+        }
+    }
+    else
+    {
+        cout << "BAD INPUT" << endl;
+        return shuffle_photo();
+    }
+
+}
 //_________________________________________
 
 void mainmessage(){
@@ -183,6 +365,13 @@ void mainmessage(){
             cout << "=> Enlarge Image" << endl;
             loadImage();
             enlarge_photo();
+            saveImage();
+            break;
+        }else if (choosing == "b")
+        {
+            cout << "=> Shuffle Image" << endl;
+            loadImage();
+            shuffle_photo();
             saveImage();
             break;
         }else
