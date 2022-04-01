@@ -1,10 +1,13 @@
-// Program: demo2.cpp
+// Program: PHOTOSHOP.cpp
 // Purpose: Demonstrate use of bmplip for handling
 //          bmp colored and grayscale images
 //          Program load a gray image and store in another file
-// Author:  Mohammad El-Ramly
-// Date:    30 March 2018
-// Version: 1.0
+// Author - 1:  Abdelrhman Reda Mohammed
+// Author - 2:  Mahmoud Mamdouh
+// Author - 3:  Abo Bakr Ahmed
+
+// Date:    31 March 2018
+// Version: 3.0
 
 #include <iostream>
 #include <fstream>
