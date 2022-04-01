@@ -21,10 +21,16 @@ unsigned char image[SIZE][SIZE];
 unsigned char saveimage[SIZE][SIZE];
 
 void mainmessage();
+void loadImage();
+void saveImage();
 
 int main()
 {
-  mainmessage();
+    cout << "AHLAN YA USER !" <<endl;
+    loadImage();
+    cout << "Please select a filter to apply or 0 to exit: " <<endl;
+    mainmessage();
+    saveImage();
   return 0;
 }
 
@@ -33,7 +39,7 @@ void loadImage () {
    char imageFileName[100];
 
    // Get gray scale image file name
-   cout << "Enter the source image file name: ";
+   cout << "Please enter file name of the image to process: ";
    cin >> imageFileName;
 
    // Add to it .bmp extension and load image
@@ -347,32 +353,24 @@ void mainmessage(){
         else if (choosing == "1")
         {
             cout << "=> Black And White FIlter" << endl;
-            loadImage();
             black_white();
-            saveImage();
             break;
         }
         else if (choosing == "2")
         {
             cout << "=> Invert Filter" << endl;
-            loadImage();
             invert_photo();
-            saveImage();
             break;
         }
         else if (choosing == "8")
         {
             cout << "=> Enlarge Image" << endl;
-            loadImage();
             enlarge_photo();
-            saveImage();
             break;
         }else if (choosing == "b")
         {
             cout << "=> Shuffle Image" << endl;
-            loadImage();
             shuffle_photo();
-            saveImage();
             break;
         }else
         {
