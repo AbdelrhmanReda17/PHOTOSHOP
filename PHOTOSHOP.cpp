@@ -20,46 +20,52 @@ unsigned char image[SIZE][SIZE];
 unsigned char saveimage[SIZE][SIZE];
 
 void mainmessage();
-int loadImage();
+void loadImage();
+void load_Two_Image();
 void saveImage();
 
 int main()
 {
     cout << "AHLAN YA USER !" <<endl;
-
-    if (loadImage()==0)
-    {
-        cout << "Please select a filter to apply or 0 to exit: " <<endl;
-        mainmessage();
-        saveImage();
-    }
+    cout << "Please select a filter to apply or 0 to exit: " <<endl;
+    mainmessage();
+    saveImage();
 
 
   return 0;
 }
 
 //_________________________________________
-int loadImage () {
-   char imageFileName[100];
+void loadImage () {
+    char imageFileName[100];
 
-   // Get gray scale image file name
-   cout << "Please enter file name of the image to process: ";
-   cin >> imageFileName;
+    // Get gray scale image file name
+    cout << "Please Enter the Name of the image to process: ";
+    cin >> imageFileName;
 
-   // Add to it .bmp extension and load image
-   strcat (imageFileName, ".bmp");
-   if (readGSBMP(imageFileName, image) == 1)
-   {
-       return loadImage();
-   }
-   else
-   {
-        sleep(1);
-        system("CLS");
-        cout << "Image Added Successfully\n";
-        return 0;
-   }
+    // Add to it .bmp extension and load image
+    strcat (imageFileName, ".bmp");
+    readGSBMP(imageFileName, image);
+    sleep(1);
+    system("CLS");
+    cout << "Image Added Successfully\n";
 
+}
+//_________________________________________
+void load_Two_Image()
+{
+    char n1[20], n2[20];
+    cout << "Image 1's Name: ";
+    cin >> n1;
+    cout << "Image 2's Name: ";
+    cin >> n2;
+    strcat(n1, ".bmp");
+    strcat(n2, ".bmp");
+    readGSBMP(n1, image);
+    readGSBMP(n2, saveimage);
+    sleep(1);
+    system("CLS");
+    cout << "2 Image Added Successfully\n";
 }
 //_________________________________________
 void saveImage () {
@@ -224,6 +230,62 @@ void dark_light_photo() {
      system("CLS");
      cout << "BAD INPUT "<<endl;
      return dark_light_photo();
+    }
+}
+//---------------------------------------------
+//              Merge Filter
+//---------------------------------------------
+void do_merge()
+{
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            saveimage[i][j] = (image[i][j] + saveimage[i][j]) / 2;
+        }
+    }
+}
+//---------------------------------------------
+//              Flip Filter
+//---------------------------------------------
+void do_flip()
+{
+    int want;
+    cout << "Flip:\n[1] Horizontaly\n[2] Vertically\n=> ";
+    cin >> want;
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            saveimage[i][j] = image[i][j];
+        }
+    }
+    if(want == 1)
+    {
+        for(int i = 0; i < SIZE; i++)
+        {
+            for(int j = 0; j < SIZE; j++)
+            {
+                image[i][j] = saveimage[i][SIZE - j - 1];
+            }
+        }
+    }
+    else if(want == 2)
+    {
+        for(int i = 0; i < SIZE; i++)
+        {
+            for(int j = 0; j < SIZE; j++)
+            {
+                image[i][j] = saveimage[SIZE - i - 1][j];
+            }
+        }
+    }
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            saveimage[i][j] = image[i][j];
+        }
     }
 }
 
@@ -443,28 +505,47 @@ void mainmessage(){
         else if (choosing == "1")
         {
             cout << "\n=> Black And White FIlter" << endl;
+            loadImage();
             black_white();
             break;
         }
         else if (choosing == "2")
         {
             cout << "\n=> Invert Filter" << endl;
+            loadImage();
             invert_photo();
+            break;
+        }
+        else if(choosing == "3")
+        {
+            cout << "\n=> Merge Filter" << endl;
+            load_Two_Image();
+            do_merge();
+            break;
+        }
+        else if(choosing == "4")
+        {
+            cout << "\n=> Flip Filter" << endl;
+            loadImage();
+            do_flip();
             break;
         }
         else if (choosing == "5")
         {
             cout << "\n=> Darken And Lighten Filter" << endl;
+            loadImage();
             dark_light_photo();
             break;
         }
         else if (choosing == "8")
         {
             cout << "\n=> Enlarge Image" << endl;
+            loadImage();
             enlarge_photo();
             break;
         }else if (choosing == "b")
         {
+            loadImage();
             cout << "\n=> Shuffle Image" << endl;
             shuffle_photo();
             break;
