@@ -21,21 +21,26 @@ unsigned char image[SIZE][SIZE];
 unsigned char saveimage[SIZE][SIZE];
 
 void mainmessage();
-void loadImage();
+int loadImage();
 void saveImage();
 
 int main()
 {
     cout << "AHLAN YA USER !" <<endl;
-    loadImage();
-    cout << "Please select a filter to apply or 0 to exit: " <<endl;
-    mainmessage();
-    saveImage();
+
+    if (loadImage()==0)
+    {
+        cout << "Please select a filter to apply or 0 to exit: " <<endl;
+        mainmessage();
+        saveImage();
+    }
+
+
   return 0;
 }
 
 //_________________________________________
-void loadImage () {
+int loadImage () {
    char imageFileName[100];
 
    // Get gray scale image file name
@@ -44,7 +49,18 @@ void loadImage () {
 
    // Add to it .bmp extension and load image
    strcat (imageFileName, ".bmp");
-   readGSBMP(imageFileName, image);
+   if (readGSBMP(imageFileName, image) == 1)
+   {
+       return loadImage();
+   }
+   else
+   {
+        sleep(1);
+        system("CLS");
+        cout << "Image Added Successfully\n";
+        return 0;
+   }
+
 }
 //_________________________________________
 void saveImage () {
@@ -59,8 +75,10 @@ void saveImage () {
    writeGSBMP(imageFileName, saveimage);
 }
 
-//               FILTERS
-//_________________________________________
+
+//---------------------------------------------
+//              BLACK AND WHITE FILTER
+//---------------------------------------------
 
 void black_white() {
   for (int i = 0; i < SIZE; i++) {
@@ -73,7 +91,9 @@ void black_white() {
   }
 }
 
-//_________________________________________
+//---------------------------------------------
+//                  ENLARGE FILTER
+//---------------------------------------------
 
 void enlarge_photo() {
     int choose;
@@ -127,13 +147,17 @@ void enlarge_photo() {
         }
     }else
     {
+        sleep(1);
+        system("CLS");
         cout << "BAD INPUT " <<endl;
         return enlarge_photo();
     }
 
 }
 
-//_________________________________________
+//---------------------------------------------
+//              INVERT FILTER
+//---------------------------------------------
 
 void invert_photo() {
     for (int i = 0; i < SIZE; i++)
@@ -144,8 +168,71 @@ void invert_photo() {
         }
     }
 }
-//_________________________________________
-void first_quarter(int quarter)
+
+//---------------------------------------------
+//            Darken Lighten Filter
+//---------------------------------------------
+
+void dark_light_photo() {
+    char choose;
+    int average;
+    cout << "Do you want to (d)arken or (l)ighten? : ";
+    cin >> choose;
+    for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE ;j++)
+            {
+                average += image[i][j];
+            }
+        }
+    average = average / (256*256);
+    if (choose == 'd')
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE ;j++)
+            {
+                if (image[i][j] > average)
+                {
+                    saveimage[i][j] = image[i][j] - 70;
+                }else
+                {
+                    saveimage[i][j] = image[i][j];
+                }
+            }
+        }
+
+    }
+    else if (choose == 'l')
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE ;j++)
+            {
+                if (image[i][j] < average)
+                {
+                    saveimage[i][j] = image[i][j] + 70;
+                }else
+                {
+                    saveimage[i][j] = image[i][j];
+                }
+            }
+        }
+    }
+    else
+    {
+     sleep(1);
+     system("CLS");
+     cout << "BAD INPUT "<<endl;
+     return dark_light_photo();
+    }
+}
+
+//---------------------------------------------
+//              Shuffle Filter
+//---------------------------------------------
+
+void first_quarter(int quarter) // first quarter function..
 {
     int y = 128;
     for (int i = 0; i < 128 ; i++)
@@ -175,7 +262,7 @@ void first_quarter(int quarter)
     y++;
     }
 }
-void second_quarter(int quarter)
+void second_quarter(int quarter) // Second quarter function..
 {
     int y = 128;
     for (int i = 0; i < 128 ; i++)
@@ -206,7 +293,7 @@ void second_quarter(int quarter)
     y++;
     }
 }
-void third_quarter(int quarter)
+void third_quarter(int quarter) // Third quarter function..
 {
     int y = 0;
     for (int i = 128; i <= 256 ; i++)
@@ -238,7 +325,7 @@ void third_quarter(int quarter)
     y++;
     }
 }
-void fourth_quarter(int quarter)
+void fourth_quarter(int quarter) // Fourth quarter function..
 {
     int y = 0;
     for (int i = 128; i <= 256 ; i++)
@@ -271,7 +358,7 @@ void fourth_quarter(int quarter)
     }
 }
 
-void shuffle_photo() {
+void shuffle_photo() {                      // Main Filter function..
     string arr ={'1','2','3','4'};
     int check = 0;
     string choose;
@@ -318,18 +405,22 @@ void shuffle_photo() {
     }
     else
     {
+        sleep(1);
+        system("CLS");
         cout << "BAD INPUT" << endl;
         return shuffle_photo();
     }
 
 }
-//_________________________________________
+
+//---------------------------------------------
+//              CHOOSING FUNCTION
+//---------------------------------------------
 
 void mainmessage(){
     string choosing;
     while(true)
     {
-        cout << "CHOOSE A Filter PLEASE \n";
         cout << "[1] Black And White Filter \n"
              << "[2] Invert Filter \n"
              << "[3] Merge Filter \n"
@@ -352,29 +443,35 @@ void mainmessage(){
         }
         else if (choosing == "1")
         {
-            cout << "=> Black And White FIlter" << endl;
+            cout << "\n=> Black And White FIlter" << endl;
             black_white();
             break;
         }
         else if (choosing == "2")
         {
-            cout << "=> Invert Filter" << endl;
+            cout << "\n=> Invert Filter" << endl;
             invert_photo();
+            break;
+        }
+        else if (choosing == "5")
+        {
+            cout << "\n=> Darken And Lighten Filter" << endl;
+            dark_light_photo();
             break;
         }
         else if (choosing == "8")
         {
-            cout << "=> Enlarge Image" << endl;
+            cout << "\n=> Enlarge Image" << endl;
             enlarge_photo();
             break;
         }else if (choosing == "b")
         {
-            cout << "=> Shuffle Image" << endl;
+            cout << "\n=> Shuffle Image" << endl;
             shuffle_photo();
             break;
         }else
         {
-            sleep(2);
+            sleep(1);
             system("CLS");
             cout << "Wrong Choose !!" << endl;
             return mainmessage();
