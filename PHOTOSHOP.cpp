@@ -23,6 +23,7 @@ unsigned char mergeimage[SIZE][SIZE];
 void mainmessage();
 int loadImage();
 int loadMergeImage();
+
 void saveImage();
 
 int main()
@@ -34,6 +35,7 @@ int main()
         mainmessage();
         saveImage();
     }
+
   return 0;
 }
 
@@ -78,6 +80,7 @@ int loadMergeImage() {
         cout << "2nd Image Added Successfully\n";
         return 0;
     }
+
 }
 //_________________________________________
 void saveImage () {
