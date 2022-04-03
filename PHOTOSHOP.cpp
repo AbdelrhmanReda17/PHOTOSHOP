@@ -105,6 +105,76 @@ void black_white() {
   }
 }
 //---------------------------------------------
+//                  Shrink FILTER
+//---------------------------------------------
+void do_shrink()
+{
+    int want;
+    cout << "Shrink to:\n[1] 1/2\n[2] 1/3\n[3] 1/4\n=> ";
+    cin >> want;
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            saveimage[i][j] = 255;
+        }
+    }
+    if(want == 1)
+    {
+        int x = 0, y = 0;
+        while(x < 256 && y < 256)
+        {
+            saveimage[x / 2][y / 2] = image[x][y];
+            if(y == 254 && x != 254)
+            {
+                x += 2;
+                y = 0;
+            }
+            else
+                y += 2;
+        }
+    }
+    else if(want == 2)
+    {
+        int x = 0, y = 0;
+        while(x < 255 && y < 255)
+        {
+            saveimage[x / 3][y / 3] = image[x][y];
+            if(y == 252 && x != 252)
+            {
+                x += 3;
+                y = 0;
+            }
+            else
+                y += 3;
+        }
+    }
+    else if(want == 3)
+    {
+        int x = 0, y = 0;
+        while(x < 256 && y < 256)
+        {
+
+            saveimage[x / 4][y / 4] = image[x][y];
+            if(y == 252 && x != 252)
+            {
+                x += 4;
+                y = 0;
+            }
+            else
+                y += 4;
+        }
+    }
+    else
+    {
+        sleep(1);
+        system("CLS");
+        cout << "BAD INPUT " <<endl;
+        return do_shrink();
+    }
+
+}
+//---------------------------------------------
 //                  Rotate FILTER
 //---------------------------------------------
 void do_rotate()
@@ -698,6 +768,12 @@ void mainmessage(){
         {
             cout << "\n=> Enlarge Image" << endl;
             enlarge_photo();
+            break;
+        }
+        else if(choosing == "9")
+        {
+            cout << "\n=> Shrink Image" << endl;
+            do_shrink();
             break;
         }
         else if(choosing == "a")
