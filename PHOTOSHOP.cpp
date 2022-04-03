@@ -18,48 +18,66 @@
 using namespace std;
 unsigned char image[SIZE][SIZE];
 unsigned char saveimage[SIZE][SIZE];
+unsigned char mergeimage[SIZE][SIZE];
 
 void mainmessage();
 int loadImage();
+int loadMergeImage();
 void saveImage();
 
 int main()
 {
     cout << "AHLAN YA USER !" <<endl;
-
     if (loadImage()==0)
     {
         cout << "Please select a filter to apply or 0 to exit: " <<endl;
         mainmessage();
         saveImage();
     }
-
-
   return 0;
 }
 
 //_________________________________________
 int loadImage () {
-   char imageFileName[100];
+    char imageFileName[100];
+
+    // Get gray scale image file name
+    cout << "Please Enter the Name of the image to process: ";
+    cin >> imageFileName;
+
+    // Add to it .bmp extension and load image
+    strcat (imageFileName, ".bmp");
+    if (readGSBMP(imageFileName, image) == 1)
+       {
+           return loadImage();
+       }
+       else
+       {
+            sleep(1);
+            system("CLS");
+            cout << "Image Added Successfully\n";
+            return 0;
+       }
+}
+//_________________________________________
+int loadMergeImage() {
+   char mergeimageFileName[100];
 
    // Get gray scale image file name
-   cout << "Please enter file name of the image to process: ";
-   cin >> imageFileName;
+   cout << "Please enter name of image file to merge with: ";
+   cin >> mergeimageFileName;
 
    // Add to it .bmp extension and load image
-   strcat (imageFileName, ".bmp");
-   if (readGSBMP(imageFileName, image) == 1)
-   {
-       return loadImage();
-   }
-   else
-   {
-        sleep(1);
-        system("CLS");
-        cout << "Image Added Successfully\n";
+   strcat (mergeimageFileName, ".bmp");
+   if (readGSBMP(mergeimageFileName, mergeimage) == 1)
+    {
+        return loadMergeImage();
+    }
+    else
+    {
+        cout << "2nd Image Added Successfully\n";
         return 0;
-   }
-
+    }
 }
 //_________________________________________
 void saveImage () {
@@ -233,6 +251,66 @@ void dark_light_photo() {
      system("CLS");
      cout << "BAD INPUT "<<endl;
      return dark_light_photo();
+    }
+}
+//---------------------------------------------
+//              Merge Filter
+//---------------------------------------------
+void do_merge()
+{
+    if (loadMergeImage()==0)
+    {
+        for(int i = 0; i < SIZE; i++)
+        {
+            for(int j = 0; j < SIZE; j++)
+            {
+                saveimage[i][j] = (image[i][j] + mergeimage[i][j]) / 2;
+            }
+        }
+    }
+
+}
+//---------------------------------------------
+//              Flip Filter
+//---------------------------------------------
+void do_flip()
+{
+    int want;
+    cout << "Flip:\n[1] Horizontaly\n[2] Vertically\n=> ";
+    cin >> want;
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            saveimage[i][j] = image[i][j];
+        }
+    }
+    if(want == 1)
+    {
+        for(int i = 0; i < SIZE; i++)
+        {
+            for(int j = 0; j < SIZE; j++)
+            {
+                image[i][j] = saveimage[i][SIZE - j - 1];
+            }
+        }
+    }
+    else if(want == 2)
+    {
+        for(int i = 0; i < SIZE; i++)
+        {
+            for(int j = 0; j < SIZE; j++)
+            {
+                image[i][j] = saveimage[SIZE - i - 1][j];
+            }
+        }
+    }
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            saveimage[i][j] = image[i][j];
+        }
     }
 }
 
@@ -459,6 +537,18 @@ void mainmessage(){
         {
             cout << "\n=> Invert Filter" << endl;
             invert_photo();
+            break;
+        }
+        else if(choosing == "3")
+        {
+            cout << "\n=> Merge Filter" << endl;
+            do_merge();
+            break;
+        }
+        else if(choosing == "4")
+        {
+            cout << "\n=> Flip Filter" << endl;
+            do_flip();
             break;
         }
         else if (choosing == "5")
