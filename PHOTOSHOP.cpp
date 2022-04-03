@@ -21,26 +21,24 @@ unsigned char saveimage[SIZE][SIZE];
 unsigned char mergeimage[SIZE][SIZE];
 
 void mainmessage();
-int loadImage();
-int loadMergeImage();
+void loadImage();
+void loadMergeImage();
 
 void saveImage();
 
 int main()
 {
     cout << "AHLAN YA USER !" <<endl;
-    if (loadImage()==0)
-    {
-        cout << "Please select a filter to apply or 0 to exit: " <<endl;
-        mainmessage();
-        saveImage();
-    }
+    loadImage();
+    cout << "Please select a filter to apply or 0 to exit: " <<endl;
+    mainmessage();
+    saveImage();
 
   return 0;
 }
 
 //_________________________________________
-int loadImage () {
+void loadImage () {
     char imageFileName[100];
 
     // Get gray scale image file name
@@ -49,20 +47,18 @@ int loadImage () {
 
     // Add to it .bmp extension and load image
     strcat (imageFileName, ".bmp");
-    if (readGSBMP(imageFileName, image) == 1)
-       {
-           return loadImage();
-       }
-       else
-       {
-            sleep(1);
-            system("CLS");
-            cout << "Image Added Successfully\n";
-            return 0;
-       }
+    while(readGSBMP(imageFileName, image) == 1)
+    {
+        cout << "Please Enter the Name of the image to process: ";
+        cin >> imageFileName;
+    }
+
+    sleep(1);
+    system("CLS");
+    cout << "Image Added Successfully\n";
 }
 //_________________________________________
-int loadMergeImage() {
+void loadMergeImage() {
    char mergeimageFileName[100];
 
    // Get gray scale image file name
@@ -71,15 +67,13 @@ int loadMergeImage() {
 
    // Add to it .bmp extension and load image
    strcat (mergeimageFileName, ".bmp");
-   if (readGSBMP(mergeimageFileName, mergeimage) == 1)
+   while(readGSBMP(mergeimageFileName, mergeimage) == 1)
     {
-        return loadMergeImage();
+        cout << "Please enter name of image file to merge with: ";
+        cin >> mergeimageFileName;
     }
-    else
-    {
-        cout << "2nd Image Added Successfully\n";
-        return 0;
-    }
+    cout << "2nd Image Added Successfully\n";
+
 
 }
 //_________________________________________
@@ -110,7 +104,59 @@ void black_white() {
     }
   }
 }
-
+//---------------------------------------------
+//                  Rotate FILTER
+//---------------------------------------------
+void do_rotate()
+{
+    int want;
+    cout << "Rotate:\n[1] 90 Degrees\n[2] 180 Degrees\n[3] 270 Degrees\n=> ";
+    cin >> want;
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            saveimage[i][j] = image[i][j];
+        }
+    }
+    if(want == 1)
+    {
+        for(int i = 0; i < SIZE; i++)
+        {
+            for(int j = 0; j < SIZE; j++)
+            {
+                saveimage[i][j] = image[j][SIZE - i - 1];
+            }
+        }
+    }
+    else if(want == 2)
+    {
+        for(int i = 0; i < SIZE; i++)
+        {
+            for(int j = 0; j < SIZE; j++)
+            {
+                saveimage[i][j] = image[SIZE - i - 1][SIZE - j - 1];
+            }
+        }
+    }
+    else if(want == 3)
+    {
+        for(int i = 0; i < SIZE; i++)
+        {
+            for(int j = 0; j < SIZE; j++)
+            {
+                saveimage[i][j] = image[SIZE - j - 1][i];
+            }
+        }
+    }
+    else
+    {
+        sleep(1);
+        system("CLS");
+        cout << "BAD INPUT " <<endl;
+        return do_rotate();
+    }
+}
 //---------------------------------------------
 //                  ENLARGE FILTER
 //---------------------------------------------
@@ -261,17 +307,92 @@ void dark_light_photo() {
 //---------------------------------------------
 void do_merge()
 {
-    if (loadMergeImage()==0)
+    loadMergeImage();
+    for(int i = 0; i < SIZE; i++)
     {
-        for(int i = 0; i < SIZE; i++)
+        for(int j = 0; j < SIZE; j++)
         {
-            for(int j = 0; j < SIZE; j++)
-            {
-                saveimage[i][j] = (image[i][j] + mergeimage[i][j]) / 2;
-            }
+            saveimage[i][j] = (image[i][j] + mergeimage[i][j]) / 2;
         }
     }
 
+}
+//---------------------------------------------
+//              Mirror Filter
+//---------------------------------------------
+void do_mirror()
+{
+    int want;
+    cout << "Mirror\n[1] Horizontally\n[2] Vertically\n=> ";
+    cin >> want;
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            saveimage[i][j] = image[i][j];
+        }
+    }
+    if(want == 1)
+    {
+        for(int i = 0; i < SIZE; i++)
+        {
+            int tmp = SIZE / 2 - 1;
+            for(int j = SIZE / 2; j < SIZE; j++)
+            {
+                saveimage[i][j] = image[i][tmp];
+                tmp--;
+            }
+        }
+    }
+    else if(want == 2)
+    {
+        int tmp = SIZE / 2 - 1;
+        for(int i = SIZE / 2; i < SIZE; i++)
+        {
+            for(int j = 0; j < SIZE; j++)
+            {
+                saveimage[i][j] = image[tmp][j];
+            }
+            tmp--;
+        }
+    }
+    else
+    {
+        sleep(1);
+        system("CLS");
+        cout << "BAD INPUT " <<endl;
+        return do_mirror();
+    }
+}
+//---------------------------------------------
+//              Blur Filter
+//---------------------------------------------
+void do_blur()
+{
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            saveimage[i][j] = image[i][j];
+        }
+    }
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            float sum = 0;
+            for(int x = i - 5; x < i + 6; x++)
+            {
+                for(int y = j - 5; y < j + 6; y++)
+                {
+                    if(y >= 0 && x >= 0 && x < 256 && y < 256)
+                        sum += image[x][y];
+                }
+            }
+
+            saveimage[i][j] = sum / 121;
+        }
+    }
 }
 //---------------------------------------------
 //              Flip Filter
@@ -307,6 +428,13 @@ void do_flip()
                 image[i][j] = saveimage[SIZE - i - 1][j];
             }
         }
+    }
+    else
+    {
+        sleep(1);
+        system("CLS");
+        cout << "BAD INPUT " <<endl;
+        return do_flip();
     }
     for(int i = 0; i < SIZE; i++)
     {
@@ -514,8 +642,8 @@ void mainmessage(){
              << "[2] Invert Filter \n"
              << "[3] Merge Filter \n"
              << "[4] Flip Image \n"
-             << "[5] Darken and Lighten Image \n"
-             << "[6] Rotate Image \n"
+             << "[5] Rotate Image \n"
+             << "[6] Darken and Lighten Image \n"
              << "[7] Detect Image Edges \n"
              << "[8] Enlarge Image\n"
              << "[9] Shrink Image\n"
@@ -554,7 +682,13 @@ void mainmessage(){
             do_flip();
             break;
         }
-        else if (choosing == "5")
+        else if(choosing == "5")
+        {
+            cout << "\n=> Rotate Filter" << endl;
+            do_rotate();
+            break;
+        }
+        else if (choosing == "6")
         {
             cout << "\n=> Darken And Lighten Filter" << endl;
             dark_light_photo();
@@ -565,12 +699,26 @@ void mainmessage(){
             cout << "\n=> Enlarge Image" << endl;
             enlarge_photo();
             break;
-        }else if (choosing == "b")
+        }
+        else if(choosing == "a")
+        {
+            cout << "\n=> Mirror Image" << endl;
+            do_mirror();
+            break;
+        }
+        else if (choosing == "b")
         {
             cout << "\n=> Shuffle Image" << endl;
             shuffle_photo();
             break;
-        }else
+        }
+        else if(choosing == "c")
+        {
+            cout << "\n=> Blur Image" << endl;
+            do_blur();
+            break;
+        }
+        else
         {
             sleep(1);
             system("CLS");
