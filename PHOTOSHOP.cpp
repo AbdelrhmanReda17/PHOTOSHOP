@@ -106,6 +106,8 @@ void enlarge_photo() {
             for (int j = 0 , k = 0 ; j < 128 ;k+=2,j++)
             {
                 saveimage[y][k] = image[i][j];
+                saveimage[y+1][k] = image[i][j];
+                saveimage[y][k+1] = image[i][j];
                 saveimage[y+1][k+1] = image[i][j];
             }
         }
@@ -117,18 +119,22 @@ void enlarge_photo() {
             for (int j = 127 , k = 0 ; j < 256 ;k+=2,j++)
             {
                 saveimage[y][k] = image[i][j];
+                saveimage[y+1][k] = image[i][j];
+                saveimage[y][k+1] = image[i][j];
                 saveimage[y+1][k+1] = image[i][j];
 
             }
         }
     }
-    if (choose == 3)
+    else if (choose == 3)
     {
         for (int i = 128, y = 0; i < 256 ; i++,y+=2)
         {
             for (int j = 0 , k = 0 ; j < 128 ;k+=2,j++)
             {
                 saveimage[y][k] = image[i][j];
+                saveimage[y+1][k] = image[i][j];
+                saveimage[y][k+1] = image[i][j];
                 saveimage[y+1][k+1] = image[i][j];
             }
         }
@@ -140,11 +146,14 @@ void enlarge_photo() {
             for (int j = 127 , k = 0 ; j < 256 ;k+=2,j++)
             {
                 saveimage[y][k] = image[i][j];
+                saveimage[y+1][k] = image[i][j];
+                saveimage[y][k+1] = image[i][j];
                 saveimage[y+1][k+1] = image[i][j];
 
             }
         }
-    }else
+    }
+    else
     {
         sleep(1);
         system("CLS");
