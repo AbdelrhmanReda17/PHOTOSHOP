@@ -4,7 +4,7 @@
 //          Program load a gray image and store in another file
 // Author:  Mohammad El-Ramly
 // Date:    30 March 2018
-// Version: 1.0
+// Version: 2.0
 
 #include <iostream>
 #include <fstream>
