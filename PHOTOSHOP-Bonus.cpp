@@ -27,13 +27,10 @@ void saveImage ();
 int main()
 {
     cout << "AHLAN YA USER !" <<endl;
-
-    if (loadImage()==0)
-    {
-        cout << "Please select a filter to apply or 0 to exit: " <<endl;
-        mainmessage();
-        saveImage();
-    }
+    loadImage();
+    cout << "Please select a filter to apply or 0 to exit: " <<endl;
+    mainmessage();
+    saveImage();
 
 
   return 0;
@@ -49,17 +46,13 @@ int loadImage () {
 
    // Add to it .bmp extension and load image
    strcat (imageFileName, ".bmp");
-   if (readRGBBMP(imageFileName, image) == 1)
-   {
-       return loadImage();
-   }
-   else
-   {
-        sleep(1);
-        system("CLS");
-        cout << "Image Added Successfully\n";
-        return 0;
-   }
+    while(readGSBMP(imageFileName, image) == 1)
+    {
+            return loadImage();
+    }
+    sleep(1);
+    system("CLS");
+    cout << "Image Added Successfully\n";
 
 }
 //_________________________________________
@@ -72,14 +65,12 @@ int loadMergeImage () {
 
    // Add to it .bmp extension and load image
    strcat (imageFileName, ".bmp");
-   if (readRGBBMP(imageFileName, mergeimage) == 1)
-   {
-       return loadMergeImage();
-   }
-   else
-   {
-        return 0;
-   }
+   strcat (mergeimageFileName, ".bmp");
+   while(readGSBMP(mergeimageFileName, mergeimage) == 1)
+    {
+                return loadMergeImage();
+    }
+    cout << "2nd Image Added Successfully\n";
 
 }
 //_________________________________________
