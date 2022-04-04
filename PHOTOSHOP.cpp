@@ -49,8 +49,7 @@ void loadImage () {
     strcat (imageFileName, ".bmp");
     while(readGSBMP(imageFileName, image) == 1)
     {
-        cout << "Please Enter the Name of the image to process: ";
-        cin >> imageFileName;
+       return loadImage();
     }
 
     sleep(1);
@@ -69,8 +68,7 @@ void loadMergeImage() {
    strcat (mergeimageFileName, ".bmp");
    while(readGSBMP(mergeimageFileName, mergeimage) == 1)
     {
-        cout << "Please enter name of image file to merge with: ";
-        cin >> mergeimageFileName;
+       return loadMergeImage();
     }
     cout << "2nd Image Added Successfully\n";
 
