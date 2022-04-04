@@ -1,6 +1,7 @@
 # Photoshop Program With C++ 
 ## FCAI Assignment 
 ### This Program Contain 12 Filter
+ 
 
 [1] Black & White Filter <br />
 [2] Invert Filter<br />
@@ -16,9 +17,13 @@
 [c] Blur Image<br />
 <br />
 ## Additional Info
+- PHOTOSHOP.cpp For GRAYSCALE PHOTOS 
+- PHOTOSHOP-Bonus.cpp For Color PHOTOS
 - you should add all files in one folder and add the image in same folder
 - make sure that you add the correct name of image
 ## Example
-|-----------------|-----------------|
-| ----------------| --------------- |
-|  Result - 2 | Result - 1      |
+
+|-----------------|-----------------| --------------- |
+|  Original Photo - 1 | Original Photo -2      |  Original Photo - 3      |
+|-----------------|-----------------| --------------- |
+|  Result - 1 | Result - 2      | Result - 3      |
