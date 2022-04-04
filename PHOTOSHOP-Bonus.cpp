@@ -35,8 +35,8 @@ int main()
 
   return 0;
 }
-
 //_________________________________________
+
 int loadImage () {
    char imageFileName[100];
 
@@ -46,7 +46,7 @@ int loadImage () {
 
    // Add to it .bmp extension and load image
    strcat (imageFileName, ".bmp");
-    while(readGSBMP(imageFileName, image) == 1)
+    while(readRGBBMP(imageFileName, image) == 1)
     {
             return loadImage();
     }
@@ -65,8 +65,7 @@ int loadMergeImage () {
 
    // Add to it .bmp extension and load image
    strcat (imageFileName, ".bmp");
-   strcat (mergeimageFileName, ".bmp");
-   while(readGSBMP(mergeimageFileName, mergeimage) == 1)
+   while(readRGBBMP(imageFileName, mergeimage) == 1)
     {
                 return loadMergeImage();
     }
