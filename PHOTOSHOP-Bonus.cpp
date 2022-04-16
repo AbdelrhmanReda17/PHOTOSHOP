@@ -239,11 +239,138 @@ void rotate_photo() {
         return rotate_photo();
     }
 }
+//---------------------------------------------
+//              Darken Ligthen FILTER
+//---------------------------------------------
+void do_dark()
+{
+    int want;
+    cout << "[1] Darken The Image\n[2] Lighten The Image\n=> ";
+    cin >> want;
+    if(want == 1)
+    {
+        for(int i = 0; i < SIZE; i++)
+        {
+            for(int j = 0; j < SIZE; j++)
+            {
+                for(int x = 0; x < RGB; x++)
+                {
+                    image[i][j][x] = image[i][j][x] * 0.25;
+                }
+            }
+        }
+    }
+    else if(want == 2)
+    {
+        for(int i = 0; i < SIZE; i++)
+        {
+            for(int j = 0; j < SIZE; j++)
+            {
+                for(int x = 0; x < RGB; x++)
+                {
+                    image[i][j][x] += (255 - image[i][j][x]) * 0.75;
+                }
+            }
+        }
+    }
+    else
+    {
+        sleep(1);
+        system("CLS");
+        cout << "BAD INPUT" << endl;
+        return do_dark();
+    }
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            for(int x = 0; x < RGB; x++)
+            {
+                saveimage[i][j][x] = image[i][j][x];
+            }
+        }
+    }
 
+}
+//---------------------------------------------
+//              Shrink FILTER
+//---------------------------------------------
+void do_shrink()
+{
+    int want;
+    cout << "Shrink By:\n[1] 1/2\n[2] 1/3\n[3] 1/4\n=> ";
+    cin >> want;
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            for(int x = 0; x < RGB; x++)
+            {
+                saveimage[i][j][x] = 255;
+            }
+        }
+    }
+    if(want == 1)
+    {
+        int c = 0, v = 0;
+        for(int i = 0; i < SIZE / 2; i++)
+        {
+            for(int j = 0; j < SIZE / 2; j++)
+            {
+                for(int x = 0; x < RGB; x++)
+                {
+                    saveimage[i][j][x] = image[c][v][x];
+                }
+                v += 2;
+                if(v > 255)
+                {
+                    v = 0; c += 2;
+                }
+            }
+        }
+    }
+    else if(want == 2)
+    {
+        int c = 0, v = 0;
+        for(int i = 0; i < SIZE / 3; i++)
+        {
+            for(int j = 0; j < SIZE / 3; j++)
+            {
+                for(int x = 0; x < RGB; x++)
+                {
+                    saveimage[i][j][x] = image[c][v][x];
+                }
+                v += 3;
+                if(v > 252)
+                {
+                    v = 0; c += 3;
+                }
+            }
+        }
+    }
+    else if(want == 3)
+    {
+        int c = 0, v = 0;
+        for(int i = 0; i < SIZE / 4; i++)
+        {
+            for(int j = 0; j < SIZE / 4; j++)
+            {
+                for(int x = 0; x < RGB; x++)
+                {
+                    saveimage[i][j][x] = image[c][v][x];
+                }
+                v += 4;
+                if(v > 252)
+                {
+                    v = 0; c += 4;
+                }
+            }
+        }
+    }
+}
 //---------------------------------------------
 //              Enlarge FILTER
 //---------------------------------------------
-
 void enlarge_photo() {
     int choose;
     cout << "Which quarter to enlarge 1, 2, 3 or 4\n=>";
@@ -321,11 +448,45 @@ void enlarge_photo() {
         cout << "BAD INPUT !" << endl;
     }
 }
-
+//---------------------------------------------
+//            Blur Filter
+//---------------------------------------------
+void do_blur()
+{
+    int sum = 0;
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            for(int x = 0; x < RGB; x++)
+            {
+                saveimage[i][j][x] = image[i][j][x];
+            }
+        }
+    }
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            for(int x = 0; x < RGB; x++)
+            {
+                sum = 0;
+                for(int c = i - 5; c < i + 6; c++)
+                {
+                    for(int v = j - 5; v < j + 6; v++)
+                    {
+                        if(c >= 0 && v >= 0 && c < 256 && v < 256)
+                            sum += image[c][v][x];
+                    }
+                }
+                saveimage[i][j][x] = sum / 121;
+            }
+        }
+    }
+}
 //---------------------------------------------
 //            Shuffle Filter
 //---------------------------------------------
-
 void first_quarter(int quarter) // first quarter function..
 {
     int y = 128;
@@ -524,7 +685,6 @@ void shuffle_photo() {                      // Main Filter function..
 //---------------------------------------------
 //              Mirror Filter
 //---------------------------------------------
-
 void mirror_image(){
     string choose;
     cout << "Left,Right,Upper or Lower mirror?\n=>";
@@ -605,7 +765,6 @@ void mirror_image(){
 //              CHOOSING FUNCTION
 //---------------------------------------------
 
-
 void mainmessage(){
     string choosing;
     while(true)
@@ -652,12 +811,26 @@ void mainmessage(){
             cout << "\n=> Flip Filter" << endl;
             flip_photo();
             break;
-        }else if (choosing == "6")
+        }
+        else if(choosing == "5")
+        {
+            cout << "\n=> Darken Ligthen Filter" << endl;
+            do_dark();
+            break;
+        }
+        else if (choosing == "6")
         {
             cout << "\n=> Rotate Filter" << endl;
             rotate_photo();
             break;
-        }else if (choosing == "a")
+        }
+        else if(choosing == "9")
+        {
+            cout << "\n=> Shrink Filter" << endl;
+            do_shrink();
+            break;
+        }
+        else if (choosing == "a")
         {
             cout << "\n=> Mirror Filter" << endl;
             mirror_image();
@@ -671,6 +844,12 @@ void mainmessage(){
         {
             cout << "\n=> Shuffle Image" << endl;
             shuffle_photo();
+            break;
+        }
+        else if(choosing == "c")
+        {
+            cout << "\n=> Blur Image" << endl;
+            do_blur();
             break;
         }
         else
