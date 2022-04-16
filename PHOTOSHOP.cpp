@@ -319,7 +319,7 @@ void invert_photo() {
 void dark_light_photo() {
     char choose;
     int average;
-    cout << "Do you want to (d)arken or (l)ighten? : ";
+    cout << " Do you want to (d)arken or (l)ighten? : ";
     cin >> choose;
     for (int i = 0; i < SIZE; i++)
         {
@@ -432,6 +432,87 @@ void do_mirror()
         return do_mirror();
     }
 }
+//---------------------------------------------
+//              Edge Detector Filter
+//---------------------------------------------
+void Noise_Cancell()
+{
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            saveimage[i][j] = image[i][j];
+        }
+    }
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            float sum = 0;
+            for(int x = i - 2; x < i + 3; x++)
+            {
+                for(int y = j - 2; y < j + 3; y++)
+                {
+                    if(y >= 0 && x >= 0 && x < 256 && y < 256)
+                        sum += image[x][y];
+                }
+            }
+
+            saveimage[i][j] = sum / 25;
+        }
+    }
+}
+
+void detectImage()
+{
+    Noise_Cancell();
+    int ix[3][3] = {{-1,0,1},{-2,0,2},{-1,0,1}};
+    int iy[3][3] = {{1,2,1},{0,0,0},{-1,-2,-1}};
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            image[i][j] = saveimage[i][j];
+            saveimage[i][j] = 255;
+        }
+    }
+    for(int i = 0; i < 254; i++)
+    {
+        for(int j = 0; j < 254; j++)
+        {
+            float sumx = 0, sumy = 0;
+            for(int x = i, c = 0; x < i+3 && c < 3; x++, c++)
+            {
+                for(int y = j, v = 0; y < j+3 && v < 3; y++, v++)
+                {
+                    sumx += (image[x][y] * ix[c][v]);
+                    sumy += (image[x][y] * iy[c][v]);
+                }
+            }
+            saveimage[i][j] = sqrt(sumx * sumx + sumy * sumy);
+        }
+    }
+    int avg = 0;
+    for(int i = 0; i < 254; i++)
+    {
+        for(int j = 0; j < 254; j++)
+        {
+            avg += saveimage[i][j];
+        }
+    }
+    avg /= (254 * 254);
+    for(int i = 0; i < 254; i++)
+    {
+        for(int j = 0; j < 254; j++)
+        {
+            if(saveimage[i][j] > avg)
+                saveimage[i][j] = 0;
+            else
+                saveimage[i][j] = 255;
+        }
+    }
+}
+
 //---------------------------------------------
 //              Blur Filter
 //---------------------------------------------
@@ -760,6 +841,12 @@ void mainmessage(){
         {
             cout << "\n=> Darken And Lighten Filter" << endl;
             dark_light_photo();
+            break;
+        }
+        else if(choosing == "7")
+        {
+            cout << "\n=> Edge Detector Filter\n";
+            detectImage();
             break;
         }
         else if (choosing == "8")
