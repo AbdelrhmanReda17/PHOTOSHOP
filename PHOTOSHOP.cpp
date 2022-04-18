@@ -89,20 +89,6 @@ void saveImage () {
 
 
 //---------------------------------------------
-//              BLACK AND WHITE FILTER
-//---------------------------------------------
-
-void black_white() {
-  for (int i = 0; i < SIZE; i++) {
-    for (int j = 0; j< SIZE; j++) {
-        if (image[i][j] > 127)
-            saveimage[i][j] = 255;
-        else
-            saveimage[i][j] = 0;
-    }
-  }
-}
-//---------------------------------------------
 //                  Shrink FILTER
 //---------------------------------------------
 void do_shrink()
@@ -385,53 +371,7 @@ void do_merge()
     }
 
 }
-//---------------------------------------------
-//              Mirror Filter
-//---------------------------------------------
-void do_mirror()
-{
-    int want;
-    cout << "Mirror\n[1] Horizontally\n[2] Vertically\n=> ";
-    cin >> want;
-    for(int i = 0; i < SIZE; i++)
-    {
-        for(int j = 0; j < SIZE; j++)
-        {
-            saveimage[i][j] = image[i][j];
-        }
-    }
-    if(want == 1)
-    {
-        for(int i = 0; i < SIZE; i++)
-        {
-            int tmp = SIZE / 2 - 1;
-            for(int j = SIZE / 2; j < SIZE; j++)
-            {
-                saveimage[i][j] = image[i][tmp];
-                tmp--;
-            }
-        }
-    }
-    else if(want == 2)
-    {
-        int tmp = SIZE / 2 - 1;
-        for(int i = SIZE / 2; i < SIZE; i++)
-        {
-            for(int j = 0; j < SIZE; j++)
-            {
-                saveimage[i][j] = image[tmp][j];
-            }
-            tmp--;
-        }
-    }
-    else
-    {
-        sleep(1);
-        system("CLS");
-        cout << "BAD INPUT " <<endl;
-        return do_mirror();
-    }
-}
+
 //---------------------------------------------
 //              Edge Detector Filter
 //---------------------------------------------
@@ -548,56 +488,6 @@ void do_blur()
             }
 
             saveimage[i][j] = sum / 121;
-        }
-    }
-}
-//---------------------------------------------
-//              Flip Filter
-//---------------------------------------------
-void do_flip()
-{
-    int want;
-    cout << "Flip:\n[1] Horizontaly\n[2] Vertically\n=> ";
-    cin >> want;
-    for(int i = 0; i < SIZE; i++)
-    {
-        for(int j = 0; j < SIZE; j++)
-        {
-            saveimage[i][j] = image[i][j];
-        }
-    }
-    if(want == 1)
-    {
-        for(int i = 0; i < SIZE; i++)
-        {
-            for(int j = 0; j < SIZE; j++)
-            {
-                image[i][j] = saveimage[i][SIZE - j - 1];
-            }
-        }
-    }
-    else if(want == 2)
-    {
-        for(int i = 0; i < SIZE; i++)
-        {
-            for(int j = 0; j < SIZE; j++)
-            {
-                image[i][j] = saveimage[SIZE - i - 1][j];
-            }
-        }
-    }
-    else
-    {
-        sleep(1);
-        system("CLS");
-        cout << "BAD INPUT " <<endl;
-        return do_flip();
-    }
-    for(int i = 0; i < SIZE; i++)
-    {
-        for(int j = 0; j < SIZE; j++)
-        {
-            saveimage[i][j] = image[i][j];
         }
     }
 }
