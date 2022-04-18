@@ -307,7 +307,7 @@ void invert_photo() {
     {
         for (int j = 0; j < SIZE ;j++)
         {
-            saveimage[i][j] = 256-(image[i][j]);
+            saveimage[i][j] = 255-(image[i][j]);
         }
     }
 }
