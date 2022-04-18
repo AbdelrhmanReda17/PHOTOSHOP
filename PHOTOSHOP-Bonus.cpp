@@ -1,10 +1,11 @@
 // Program: demo2.cpp
 // Purpose: Demonstrate use of bmplip for handling
 //          bmp colored and grayscale images
-//          Program load a gray image and store in another file
+//          Program load a colored image and store in another file
+//          then we ask the user which filter do you want then do the filter..
 // Author:  Mohammad El-Ramly
-// Date:    30 March 2018
-// Version: 2.0
+// Date:    13 / 4 / 2022
+// Version: 3.0
 
 #include <iostream>
 #include <fstream>
@@ -55,7 +56,9 @@ int loadImage () {
     cout << "Image Added Successfully\n";
 
 }
+
 //_________________________________________
+
 int loadMergeImage () {
    char imageFileName[100];
 
@@ -73,6 +76,7 @@ int loadMergeImage () {
 
 }
 //_________________________________________
+
 void saveImage () {
    char imageFileName[100];
 
@@ -90,27 +94,30 @@ void saveImage () {
 //              Black & White FILTER
 //---------------------------------------------
 void black_white() {
+  float avg=0;
   for (int i = 0; i < SIZE; i++)
   {
     for (int j = 0; j< SIZE; j++)
     {
-        for (int r =0 ; r<RGB ;r++)
+        avg = (image[i][j][0] + image[i][j][1]+ image[i][j][2]) /3;
+        if (avg < 127)
         {
-            if (image[i][j][RGB] < 127)
+            for (int r =0 ; r<RGB ;r++)
             {
                 image[i][j][r] = 0;
-                saveimage[i][j][r] =image[i][j][r];
-
+                saveimage[i][j][r] = image[i][j][r];
             }
-            else
+
+        }
+        else
+        {
+            for (int r =0 ; r<RGB ;r++)
             {
                 image[i][j][r] = 255;
                 saveimage[i][j][r] = image[i][j][r];
             }
+
         }
-
-
-
     }
   }
 }
@@ -185,6 +192,9 @@ void flip_photo() {
         }
     }else{
         cout << "BAD INPUT !" << endl;
+        sleep(1);
+        system("CLS");
+        return flip_photo();
     }
 }
 
@@ -236,6 +246,8 @@ void rotate_photo() {
     }
     else{
         cout << "BAD INPUT !";
+        sleep(1);
+        system("CLS");
         return rotate_photo();
     }
 }
@@ -275,9 +287,9 @@ void do_dark()
     }
     else
     {
+        cout << "BAD INPUT" << endl;
         sleep(1);
         system("CLS");
-        cout << "BAD INPUT" << endl;
         return do_dark();
     }
     for(int i = 0; i < SIZE; i++)
@@ -367,6 +379,13 @@ void do_shrink()
             }
         }
     }
+    else
+    {
+        cout << "BAD INPUT" << endl;
+        sleep(1);
+        system("CLS");
+        return do_shrink();
+    }
 }
 //---------------------------------------------
 //              Enlarge FILTER
@@ -445,7 +464,10 @@ void enlarge_photo() {
     }
     else
     {
-        cout << "BAD INPUT !" << endl;
+        cout << "BAD INPUT" << endl;
+        sleep(1);
+        system("CLS");
+        return enlarge_photo();
     }
 }
 //---------------------------------------------
@@ -483,6 +505,7 @@ void do_blur()
             }
         }
     }
+
 }
 //---------------------------------------------
 //            Shuffle Filter
@@ -674,14 +697,70 @@ void shuffle_photo() {                      // Main Filter function..
     }
     else
     {
+        cout << "BAD INPUT" << endl;
         sleep(1);
         system("CLS");
-        cout << "BAD INPUT" << endl;
         return shuffle_photo();
     }
 
 }
 
+//---------------------------------------------
+//              Edge Detector Filter
+//---------------------------------------------
+void dark()
+{
+        for(int i = 0; i < SIZE; i++)
+        {
+            for(int j = 0; j < SIZE; j++)
+            {
+                for(int x = 0; x < RGB; x++)
+                {
+                    image[i][j][x] = image[i][j][x] * 0.22999;
+
+                }
+            }
+        }
+
+}
+
+void do_detect()
+{
+    dark();
+    int ix[3][3]={{-1,0,1},{-2,0,2},{-1,0,1}};
+    int iy[3][3]={{1,2,1},{0,0,0},{-1,-2,-1}};
+    for(int i = 0; i < 254; i++)
+    {
+        for(int j = 0; j < 254; j++)
+        {
+            for(int x = 0; x < RGB; x++)
+            {
+                float sumx = 0, sumy = 0;
+                for(int f = i, c = 0; f < i+3 && c < 3; f++, c++)
+                {
+                    for(int y = j, v = 0; y < j+3 && v < 3; y++, v++)
+                    {
+                        sumx += (image[f][y][x] * ix[c][v]);
+                        sumy += (image[f][y][x] * iy[c][v]);
+                    }
+                }
+                saveimage[i][j][x] = sqrt(sumx * sumx + sumy * sumy);
+            }
+        }
+    }
+    for(int i = 1; i < 255; i++)
+    {
+        for(int j = 1 ; j < 255; j++)
+        {
+            for(int r = 0; r < RGB; r++)
+            {
+                saveimage[i][j][r] = 255 - saveimage[i][j][r];
+            }
+
+        }
+    }
+
+}
 //---------------------------------------------
 //              Mirror Filter
 //---------------------------------------------
@@ -756,7 +835,9 @@ void mirror_image(){
         }
     }else
     {
-        cout << "BAD INPUT !"<<endl;
+        cout << "BAD INPUT" << endl;
+        sleep(1);
+        system("CLS");
         return mirror_image();
     }
 
@@ -824,6 +905,19 @@ void mainmessage(){
             rotate_photo();
             break;
         }
+        else if(choosing == "7")
+        {
+            cout << "\n=> Edge Detector Filter" << endl;
+            do_detect();
+            break;
+        }
+        else if (choosing == "8")
+        {
+            cout << "\n=> Enlarge Filter" << endl;
+            enlarge_photo();
+            break;
+        }
+
         else if(choosing == "9")
         {
             cout << "\n=> Shrink Filter" << endl;
@@ -835,12 +929,9 @@ void mainmessage(){
             cout << "\n=> Mirror Filter" << endl;
             mirror_image();
             break;
-        }else if (choosing == "8")
-        {
-            cout << "\n=> Enlarge Filter" << endl;
-            enlarge_photo();
-            break;
-        }else if (choosing == "b")
+        }
+
+        else if (choosing == "b")
         {
             cout << "\n=> Shuffle Image" << endl;
             shuffle_photo();
