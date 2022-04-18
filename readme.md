@@ -19,7 +19,7 @@
 [c] Blur Image<br />
 <br />**
 
-> *  **[PHOTOSHOP.CPP FOR GRAYSCALE PHOTOS]<br />**
+> *  **[PHOTOSHOP.CPP FOR GRAYSCALE PHOTOS]<br />
 > * **[PHOTOSHOP-BONUS.CPP FOR COLORED PHOTOS]<br />**
 ## Additional Info
 
