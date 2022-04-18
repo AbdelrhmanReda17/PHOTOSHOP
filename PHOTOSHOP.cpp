@@ -474,22 +474,13 @@ void detectImage()
             saveimage[i][j] = 255;
         }
     }
-    int average = 0;
     for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE ;j++)
         {
-            for (int j = 0; j < SIZE ;j++)
-            {
-                average += image[i][j];
-            }
+            image[i][j] = 0.2299 * image[i][j];
         }
-    average = average / (256*256);
-    for (int i = 0; i < SIZE; i++)
-        {
-            for (int j = 0; j < SIZE ;j++)
-            {
-                image[i][j] = 0.2299 * image[i][j];
-            }
-        }
+    }
     int ix[3][3] = {{-1,0,1},{-2,0,2},{-1,0,1}};
     int iy[3][3] = {{1,2,1},{0,0,0},{-1,-2,-1}};
 
