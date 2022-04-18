@@ -28,7 +28,7 @@ void saveImage();
 
 int main()
 {
-    cout << "AHLAN YA USER !" <<endl;
+    cout << "AHLAN YA USER !" <<endl ;
     loadImage();
     cout << "Please select a filter to apply or 0 to exit: " <<endl;
     mainmessage();
