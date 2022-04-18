@@ -1,9 +1,11 @@
 # Photoshop Program With C++ 
 ## FCAI Assignment 
-### This Program Contain 12 Filter
- 
 
-[1] Black & White Filter <br />
+### This Program Contain 12 Filter
+
+
+
+**[1] Black & White Filter <br />
 [2] Invert Filter<br />
 [3] Merge Filter <br />
 [4] Flip Image<br />
@@ -13,15 +15,18 @@
 [8] Enlarge Image<br />
 [9] Shrink Image<br />
 [a] Mirror 1/2 Image<br />
-[b] Shuffle Image<br />
+[b Shuffle Image<br />
 [c] Blur Image<br />
-<br />
-## Additional Info
-- PHOTOSHOP.cpp For GRAYSCALE PHOTOS 
-- PHOTOSHOP-Bonus.cpp For Color PHOTOS
+<br />**
 
-- you should add all files in one folder and add the image in same folder
-- make sure that you add the correct name of image
+> *  **[PHOTOSHOP.CPP FOR GRAYSCALE PHOTOS]<br />**
+> * **[PHOTOSHOP-BONUS.CPP FOR COLORED PHOTOS]<br />**
+## Additional Info
+
+- **[You should add all files in one folder and add the image in same folder]**
+- **[make sure that you add the correct name of image]**
+ 
+
 ## Example
 | GrayScale PHOTO -1   |  GrayScale PHOTO -2      | Color Photo - 1 | Color Photo - 2 |
 |-----------------|-----------------|-----------------|-----------------|
@@ -29,3 +34,8 @@
 | AFTER Blur Filter  | After Invert Filter   | After  Black & White Filter   |After Invert Filter   |
 |   ![ex](https://user-images.githubusercontent.com/90706154/161638548-df0d7176-a9df-4fb0-9c60-abc90ee4afd9.png) |![ele](https://user-images.githubusercontent.com/90706154/163743958-2eeca565-0bed-4a0d-9af8-aedad45d0058.png)|![mario](https://user-images.githubusercontent.com/90706154/163744040-b6c41db9-f8cc-4f2e-9f55-99d9b9a2b2f4.png)|![XXX](https://user-images.githubusercontent.com/90706154/161641211-e4451f30-aa1b-41db-9288-c84ad93e5b8c.png)|
 
+## Credit By
+> * Abdelrhman Reda Mohammed
+> * Mahmoud Mamdouh
+
+ > **Special Thanks and Appreciation To Our Professor  Dr.Mohammad El-Ramly**
