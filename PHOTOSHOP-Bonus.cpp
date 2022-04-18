@@ -94,27 +94,30 @@ void saveImage () {
 //              Black & White FILTER
 //---------------------------------------------
 void black_white() {
+  float avg=0;
   for (int i = 0; i < SIZE; i++)
   {
     for (int j = 0; j< SIZE; j++)
     {
-        for (int r =0 ; r<RGB ;r++)
+        avg = (image[i][j][0] + image[i][j][1]+ image[i][j][2]) /3;
+        if (avg < 127)
         {
-            if (image[i][j][1] < 127)
+            for (int r =0 ; r<RGB ;r++)
             {
                 image[i][j][r] = 0;
-                saveimage[i][j][r] =image[i][j][r];
-
+                saveimage[i][j][r] = image[i][j][r];
             }
-            else
+
+        }
+        else
+        {
+            for (int r =0 ; r<RGB ;r++)
             {
                 image[i][j][r] = 255;
                 saveimage[i][j][r] = image[i][j][r];
             }
+
         }
-
-
-
     }
   }
 }
