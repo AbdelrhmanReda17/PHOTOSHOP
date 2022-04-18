@@ -466,8 +466,6 @@ void Noise_Cancell()
 void detectImage()
 {
     Noise_Cancell();
-    int ix[3][3] = {{-1,0,1},{-2,0,2},{-1,0,1}};
-    int iy[3][3] = {{1,2,1},{0,0,0},{-1,-2,-1}};
     for(int i = 0; i < SIZE; i++)
     {
         for(int j = 0; j < SIZE; j++)
@@ -476,6 +474,16 @@ void detectImage()
             saveimage[i][j] = 255;
         }
     }
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE ;j++)
+        {
+            image[i][j] = 0.2299 * image[i][j];
+        }
+    }
+    int ix[3][3] = {{-1,0,1},{-2,0,2},{-1,0,1}};
+    int iy[3][3] = {{1,2,1},{0,0,0},{-1,-2,-1}};
+
     for(int i = 0; i < 254; i++)
     {
         for(int j = 0; j < 254; j++)

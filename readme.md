@@ -15,7 +15,7 @@
 [8] Enlarge Image<br />
 [9] Shrink Image<br />
 [a] Mirror 1/2 Image<br />
-[b Shuffle Image<br />
+[b] Shuffle Image<br />
 [c] Blur Image<br />
 <br />**
 
@@ -36,6 +36,7 @@
 
 ## The Code Done By
 > * Abdelrhman Reda Mohammed
-> * Mahmoud Mamdouh
+> * Mahmoud Mamdouh Abdelaziz
+> * Abo Baker Khaled
 
  > **Special Thanks and Appreciation To Our Professor  Dr.Mohammad El-Ramly**
