@@ -15,11 +15,11 @@
 [8] Enlarge Image<br />
 [9] Shrink Image<br />
 [a] Mirror 1/2 Image<br />
-[b Shuffle Image<br />
+[b] Shuffle Image<br />
 [c] Blur Image<br />
 <br />**
 
-> *  **[PHOTOSHOP.CPP FOR GRAYSCALE PHOTOS]**<br />
+> *  **[PHOTOSHOP.CPP FOR GRAYSCALE PHOTOS]<br />**
 > * **[PHOTOSHOP-BONUS.CPP FOR COLORED PHOTOS]<br />**
 ## Additional Info
 
