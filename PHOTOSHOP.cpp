@@ -28,7 +28,7 @@ void saveImage();
 
 int main()
 {
-    cout << "AHLAN YA USER !" <<endl;
+    cout << "AHLAN YA USER !" <<endl ;
     loadImage();
     cout << "Please select a filter to apply or 0 to exit: " <<endl;
     mainmessage();
@@ -88,7 +88,57 @@ void saveImage () {
 }
 
 
+//---------------------------------------------
+//              BLACK AND WHITE FILTER
+//---------------------------------------------
 
+//---------------------------------------------
+//              Mirror Filter
+//---------------------------------------------
+void do_mirror()
+{
+    int want;
+    cout << "Mirror\n[1] Horizontally\n[2] Vertically\n=> ";
+    cin >> want;
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            saveimage[i][j] = image[i][j];
+        }
+    }
+    if(want == 1)
+    {
+        for(int i = 0; i < SIZE; i++)
+        {
+            int tmp = SIZE / 2 - 1;
+            for(int j = SIZE / 2; j < SIZE; j++)
+            {
+                saveimage[i][j] = image[i][tmp];
+                tmp--;
+            }
+        }
+    }
+    else if(want == 2)
+    {
+        int tmp = SIZE / 2 - 1;
+        for(int i = SIZE / 2; i < SIZE; i++)
+        {
+            for(int j = 0; j < SIZE; j++)
+            {
+                saveimage[i][j] = image[tmp][j];
+            }
+            tmp--;
+        }
+    }
+    else
+    {
+        sleep(1);
+        system("CLS");
+        cout << "BAD INPUT " <<endl;
+        return do_mirror();
+    }
+}
 //---------------------------------------------
 //                  Shrink FILTER
 //---------------------------------------------
@@ -457,7 +507,6 @@ void do_blur()
         }
     }
 }
-
 
 //---------------------------------------------
 //              Shuffle Filter
