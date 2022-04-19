@@ -465,7 +465,7 @@ void detectImage()
                     sumy += (image[x][y] * iy[c][v]);
                 }
             }
-            saveimage[i][j] = sqrt(sumx * sumx + sumy * sumy);
+            saveimage[i][j] = sqrt(sumx * sumx + sumy * sumy);   // Taking the Average of the horizontal and the vertical edges
         }
     }
     for(int i = 0; i < 254; i++)
