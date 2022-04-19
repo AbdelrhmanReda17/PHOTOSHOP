@@ -376,42 +376,19 @@ void do_merge()
 //---------------------------------------------
 //              Edge Detector Filter
 //---------------------------------------------
-void Noise_Cancell()
-{
-    for(int i = 0; i < SIZE; i++)
-    {
-        for(int j = 0; j < SIZE; j++)
-        {
-            saveimage[i][j] = image[i][j];
-        }
-    }
-    for(int i = 0; i < SIZE; i++)
-    {
-        for(int j = 0; j < SIZE; j++)
-        {
-            float sum = 0;
-            for(int x = i - 2; x < i + 3; x++)
-            {
-                for(int y = j - 2; y < j + 3; y++)
-                {
-                    if(y >= 0 && x >= 0 && x < 256 && y < 256)
-                        sum += image[x][y];
-                }
-            }
 
-            saveimage[i][j] = sum / 25;
-        }
-    }
-}
+/*
+    Here We are using Sobel Edge Detector algorithm, but first
+    we darken the image by 1/3 to make the edges more clear
+*/
+
 
 void detectImage()
 {
-    Noise_Cancell();
     for(int i = 0; i < SIZE; i++)
     {
         for(int j = 0; j < SIZE; j++)
         {
-            image[i][j] = saveimage[i][j];
             saveimage[i][j] = 255;
         }
     }
@@ -419,11 +396,11 @@ void detectImage()
     {
         for (int j = 0; j < SIZE ;j++)
         {
-            image[i][j] = 0.2299 * image[i][j];
+            image[i][j] = 0.3 * image[i][j];   // Darken The Image
         }
     }
-    int ix[3][3] = {{-1,0,1},{-2,0,2},{-1,0,1}};
-    int iy[3][3] = {{1,2,1},{0,0,0},{-1,-2,-1}};
+    int ix[3][3] = {{-1,0,1},{-2,0,2},{-1,0,1}};   // To detect the Horizontal Edges
+    int iy[3][3] = {{1,2,1},{0,0,0},{-1,-2,-1}};   // To detect the Vertical Edges
 
     for(int i = 0; i < 254; i++)
     {
@@ -441,23 +418,11 @@ void detectImage()
             saveimage[i][j] = sqrt(sumx * sumx + sumy * sumy);
         }
     }
-    int avg = 0;
     for(int i = 0; i < 254; i++)
     {
         for(int j = 0; j < 254; j++)
         {
-            avg += saveimage[i][j];
-        }
-    }
-    avg /= (254 * 254);
-    for(int i = 0; i < 254; i++)
-    {
-        for(int j = 0; j < 254; j++)
-        {
-            if(saveimage[i][j] > avg)
-                saveimage[i][j] = 0;
-            else
-                saveimage[i][j] = 255;
+            saveimage[i][j] = 255 - saveimage[i][j];
         }
     }
 }
@@ -707,7 +672,7 @@ void mainmessage(){
             cout << "See You Next Time ..." << endl;
             break;
         }
-        
+
         else if (choosing == "2")
         {
             cout << "\n=> Invert Filter" << endl;
@@ -720,7 +685,7 @@ void mainmessage(){
             do_merge();
             break;
         }
-        
+
         else if(choosing == "5")
         {
             cout << "\n=> Rotate Filter" << endl;
@@ -751,7 +716,7 @@ void mainmessage(){
             do_shrink();
             break;
         }
-        
+
         else if (choosing == "b")
         {
             cout << "\n=> Shuffle Image" << endl;
