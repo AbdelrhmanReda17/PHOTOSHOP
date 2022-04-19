@@ -86,7 +86,20 @@ void saveImage () {
    strcat (imageFileName, ".bmp");
    writeGSBMP(imageFileName, saveimage);
 }
+//---------------------------------------------
+//              BLACK AND WHITE FILTER
+//---------------------------------------------
 
+void black_white() {
+  for (int i = 0; i < SIZE; i++) {
+    for (int j = 0; j< SIZE; j++) {
+        if (image[i][j] > 127)
+            saveimage[i][j] = 255;
+        else
+            saveimage[i][j] = 0;
+    }
+  }
+}
 //---------------------------------------------
 //              Mirror Filter
 //---------------------------------------------
