@@ -106,7 +106,7 @@ void black_white() {
         {
             for (int r =0 ; r<RGB ;r++)
             {
-                image[i][j][r] = 0; // MAKE THE PIXEL WHITE
+                image[i][j][r] = 0; // MAKE THE PIXEL BLACK
                 saveimage[i][j][r] = image[i][j][r];
             }
 
@@ -115,7 +115,7 @@ void black_white() {
         {
             for (int r =0 ; r<RGB ;r++)
             {
-                image[i][j][r] = 255; // MAKE THE PIXEL BLACK
+                image[i][j][r] = 255; // MAKE THE PIXEL WHITE
                 saveimage[i][j][r] = image[i][j][r];
             }
 
