@@ -157,7 +157,7 @@ void do_flip()
 void do_mirror()
 {
     int want;
-    cout << "Mirror\n[1] Horizontally\n[2] Vertically\n=> ";
+    cout << "Mirror\n[1] Left\n[2] Upper\n[3] Right\n[4] Lower\n=> ";
     cin >> want;
     for(int i = 0; i < SIZE; i++)
     {
@@ -182,6 +182,30 @@ void do_mirror()
     {
         int tmp = SIZE / 2 - 1;
         for(int i = SIZE / 2; i < SIZE; i++)
+        {
+            for(int j = 0; j < SIZE; j++)
+            {
+                saveimage[i][j] = image[tmp][j];
+            }
+            tmp--;
+        }
+    }
+    else if(want == 3)
+    {
+        for(int i = 0; i < SIZE; i++)
+        {
+            int tmp = SIZE - 1;
+            for(int j = 0; j < SIZE / 2 + 1; j++)
+            {
+                saveimage[i][j] = image[i][tmp];
+                tmp--;
+            }
+        }
+    }
+    else if(want == 4)
+    {
+        int tmp = SIZE - 1;
+        for(int i = 0; i < SIZE / 2 + 1; i++)
         {
             for(int j = 0; j < SIZE; j++)
             {
@@ -780,7 +804,12 @@ void mainmessage(){
             cout << "See You Next Time ..." << endl;
             break;
         }
-
+        else if (choosing == "1")
+        {
+            cout << "\n=> Black And White FIlter" << endl;
+            black_white();
+            break;
+        }
         else if (choosing == "2")
         {
             cout << "\n=> Invert Filter" << endl;
@@ -793,7 +822,12 @@ void mainmessage(){
             do_merge();
             break;
         }
-
+        else if(choosing == "4")
+        {
+            cout << "\n=> Flip Filter" << endl;
+            do_flip();
+            break;
+        }
         else if(choosing == "5")
         {
             cout << "\n=> Rotate Filter" << endl;
@@ -824,7 +858,12 @@ void mainmessage(){
             do_shrink();
             break;
         }
-
+        else if(choosing == "a")
+        {
+            cout << "\n=> Mirror Image" << endl;
+            do_mirror();
+            break;
+        }
         else if (choosing == "b")
         {
             cout << "\n=> Shuffle Image" << endl;
