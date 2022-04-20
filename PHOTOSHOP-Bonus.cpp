@@ -1,11 +1,13 @@
-// Program: demo2.cpp
+// Program: PHOTOSHOP-Bonus.cpp
 // Purpose: Demonstrate use of bmplip for handling
 //          bmp colored and grayscale images
 //          Program load a colored image and store in another file
 //          then we ask the user which filter do you want then do the filter..
-// Author:  Mohammad El-Ramly
+// Author - 1:  Abdelrhman Reda Mohammed
+// Author - 2:  Mahmoud Mamdouh
+// Author - 3:  Abo Bakr Ahmed
 // Date:    13 / 4 / 2022
-// Version: 3.0
+// Version: 2.5
 
 #include <iostream>
 #include <fstream>
@@ -99,12 +101,12 @@ void black_white() {
   {
     for (int j = 0; j< SIZE; j++)
     {
-        avg = (image[i][j][0] + image[i][j][1]+ image[i][j][2]) /3;
-        if (avg < 127)
+        avg = (image[i][j][0] + image[i][j][1]+ image[i][j][2]) /3; // TAKE THE AVERAGE OF EACH PIXEL
+        if (avg < 127) // CHECK IF AVERAGE LESS THAN 127
         {
             for (int r =0 ; r<RGB ;r++)
             {
-                image[i][j][r] = 0;
+                image[i][j][r] = 0; // MAKE THE PIXEL WHITE
                 saveimage[i][j][r] = image[i][j][r];
             }
 
@@ -113,7 +115,7 @@ void black_white() {
         {
             for (int r =0 ; r<RGB ;r++)
             {
-                image[i][j][r] = 255;
+                image[i][j][r] = 255; // MAKE THE PIXEL BLACK
                 saveimage[i][j][r] = image[i][j][r];
             }
 
@@ -522,19 +524,19 @@ void first_quarter(int quarter) // first quarter function..
             {
                 if (quarter == 0)
                 {
-                    saveimage[i][j][r] = image[i][j][r];
+                    saveimage[i][j][r] = image[i][j][r];// add first quarter into quarter 1
                 }
                 else if (quarter == 1)
                 {
-                    saveimage[i][x][r] = image[i][j][r];
+                    saveimage[i][x][r] = image[i][j][r];// add first quarter into quarter 2
                 }
                 else if (quarter == 2)
                 {
-                    saveimage[y][j][r] = image[i][j][r];
+                    saveimage[y][j][r] = image[i][j][r];// add first quarter into quarter 3
                 }
                 else if (quarter == 3)
                 {
-                    saveimage[y][x][r] = image[i][j][r];
+                    saveimage[y][x][r] = image[i][j][r];// add first quarter into quarter 4
 
                 }
             }
@@ -556,19 +558,19 @@ void second_quarter(int quarter) // Second quarter function..
             {
                 if (quarter == 1)
                 {
-                    saveimage[i][j][r] = image[i][j][r];
+                    saveimage[i][j][r] = image[i][j][r]; // add Second quarter into quarter 2
                 }
                 else if (quarter == 0)
                 {
-                    saveimage[i][l][r] = image[i][j][r];
+                    saveimage[i][l][r] = image[i][j][r]; // add Second quarter into quarter 1
                 }
                 else if (quarter == 3)
                 {
-                    saveimage[y][j][r] = image[i][j][r];
+                    saveimage[y][j][r] = image[i][j][r]; // add Second quarter into quarter 4
                 }
                 else if (quarter == 2)
                 {
-                    saveimage[y][l][r] = image[i][j][r];
+                    saveimage[y][l][r] = image[i][j][r]; // add Second quarter into quarter 3
 
                 }
             }
@@ -590,20 +592,20 @@ void third_quarter(int quarter) // Third quarter function..
             {
                 if (quarter == 2)
                 {
-                    saveimage[i][j][r] = image[i][j][r];
+                    saveimage[i][j][r] = image[i][j][r]; // add Third quarter into quarter 3
                 }
                 else if (quarter == 3)
                 {
-                    saveimage[i][x][r] = image[i][j][r];
+                    saveimage[i][x][r] = image[i][j][r]; // add Third quarter into quarter 4
                 }
                 else if (quarter == 0)
                 {
-                    saveimage[y][l][r] = image[i][j][r];
+                    saveimage[y][l][r] = image[i][j][r]; // add Third quarter into quarter 1
 
                 }
                 else if (quarter == 1)
                 {
-                    saveimage[y][x][r] = image[i][j][r];
+                    saveimage[y][x][r] = image[i][j][r]; // add Third quarter into quarter 2
 
                 }
             }
@@ -626,20 +628,20 @@ void fourth_quarter(int quarter) // Fourth quarter function..
             {
                 if (quarter == 3)
                 {
-                    saveimage[i][j][r] = image[i][j][r];
+                    saveimage[i][j][r] = image[i][j][r];// add Fourth quarter into quarter 4
                 }
                 else if (quarter == 2)
                 {
-                    saveimage[i][x][r] = image[i][j][r];
+                    saveimage[i][x][r] = image[i][j][r];// add Fourth quarter into quarter 3
                 }
                 else if (quarter == 0)
                 {
-                    saveimage[y][x][r] = image[i][j][r];
+                    saveimage[y][x][r] = image[i][j][r];// add Fourth quarter into quarter 1
                     x++;
                 }
                 else if (quarter == 1)
                 {
-                    saveimage[y][l][r] = image[i][j][r];
+                    saveimage[y][l][r] = image[i][j][r];// add Fourth quarter into quarter 2
 
                 }
             }
@@ -656,6 +658,7 @@ void shuffle_photo() {                      // Main Filter function..
     string choose;
     cout << "Enter New order of quarters : ";
     cin >> choose;
+    //check if there's a duplication or no ...
     for (int i = 0 ; i < choose.length() ;i++)
         {
         for (int y = 0 ; y < 4 ; y++)
@@ -664,7 +667,7 @@ void shuffle_photo() {                      // Main Filter function..
                 {
                     if (choose[1] != choose[2] && choose[1] != choose[3] && choose[2] != choose[3])
                     {
-                        if ( choose[i] == arr[y])
+                        if ( choose[i] == arr[y])     // check if user add a correct numbers..
                         {
                                 check += 1;
                                 continue;
@@ -677,19 +680,19 @@ void shuffle_photo() {                      // Main Filter function..
     {
         for ( int i = 0 ; i < choose.length() ; i++)
         {
-            if (choose[i] == '1' )
+            if (choose[i] == '1' ) // i => the place of the quarter 1
             {
                 first_quarter(i);
             }
-            else if (choose[i] == '2' )
+            else if (choose[i] == '2' ) // i => the place of the quarter 2
             {
                 second_quarter(i);
             }
-            else if (choose[i] == '3' )
+            else if (choose[i] == '3' ) // i => the place of the quarter 3
             {
                 third_quarter(i);
             }
-            else if (choose[i] == '4' )
+            else if (choose[i] == '4' ) // i => the place of the quarter 4
             {
                 fourth_quarter(i);
             }
@@ -708,7 +711,13 @@ void shuffle_photo() {                      // Main Filter function..
 //---------------------------------------------
 //              Edge Detector Filter
 //---------------------------------------------
-void dark()
+
+/*
+    Here We are using Sobel Edge Detector algorithm, but first
+    we darken the image by 1/3 to make the edges more clear
+*/
+
+void dark() // Darken The Image
 {
         for(int i = 0; i < SIZE; i++)
         {
@@ -727,8 +736,8 @@ void dark()
 void do_detect()
 {
     dark();
-    int ix[3][3]={{-1,0,1},{-2,0,2},{-1,0,1}};
-    int iy[3][3]={{1,2,1},{0,0,0},{-1,-2,-1}};
+    int ix[3][3]={{-1,0,1},{-2,0,2},{-1,0,1}}; // To detect the Horizontal Edges
+    int iy[3][3]={{1,2,1},{0,0,0},{-1,-2,-1}}; // To detect the Vertical Edges
     for(int i = 0; i < 254; i++)
     {
         for(int j = 0; j < 254; j++)
@@ -744,7 +753,7 @@ void do_detect()
                         sumy += (image[f][y][x] * iy[c][v]);
                     }
                 }
-                saveimage[i][j][x] = sqrt(sumx * sumx + sumy * sumy);
+                saveimage[i][j][x] = sqrt(sumx * sumx + sumy * sumy);// Taking the Average of the horizontal and the vertical edges
             }
         }
     }
