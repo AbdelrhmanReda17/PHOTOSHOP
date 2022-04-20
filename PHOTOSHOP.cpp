@@ -2,10 +2,11 @@
 // Purpose: Demonstrate use of bmplip for handling
 //          bmp colored and grayscale images
 //          Program load a gray image and store in another file
+//          then we ask the user which filter do you want then do the filter..
 // Author - 1:  Abdelrhman Reda Mohammed
 // Author - 2:  Mahmoud Mamdouh
 // Author - 3:  Abo Bakr Ahmed
-// Date:    31 March 2018
+// Date:    11 / 4 / 2022
 // Version: 2.5
 
 #include <iostream>
@@ -107,7 +108,7 @@ void black_white() {
 void do_flip()
 {
     int want;
-    cout << "Flip:\n[1] Horizontaly\n[2] Vertically\n=> ";
+    cout << "Flip:\n[1] Horizontally \n[2] Vertically\n=> ";
     cin >> want;
     for(int i = 0; i < SIZE; i++)
     {
@@ -439,7 +440,7 @@ void invert_photo() {
 void dark_light_photo() {
     char choose;
     int average;
-    cout << " Do you want to (d)arken or (l)ighten? : ";
+    cout << "Do you want to (d)arken or (l)ighten?\n => ";
     cin >> choose;
     for (int i = 0; i < SIZE; i++)
         {
@@ -605,20 +606,20 @@ void first_quarter(int quarter) // first quarter function..
         {
             if (quarter == 0)
             {
-                saveimage[i][j] = image[i][j];
+                saveimage[i][j] = image[i][j]; // add first quarter into quarter 1
             }
             else if (quarter == 1)
             {
-                saveimage[i][x] = image[i][j];
+                saveimage[i][x] = image[i][j]; // add second quarter into quarter 2
                 x++;
             }
             else if (quarter == 2)
             {
-                saveimage[y][j] = image[i][j];
+                saveimage[y][j] = image[i][j]; // add second quarter into quarter 3
             }
             else if (quarter == 3)
             {
-                saveimage[y][x] = image[i][j];
+                saveimage[y][x] = image[i][j]; // add second quarter into quarter 4
                 x++;
             }
         }
@@ -636,20 +637,20 @@ void second_quarter(int quarter) // Second quarter function..
         {
             if (quarter == 1)
             {
-                saveimage[i][j] = image[i][j];
+                saveimage[i][j] = image[i][j]; // add second quarter into quarter 2
             }
             else if (quarter == 0)
             {
-                saveimage[i][l] = image[i][j];
+                saveimage[i][l] = image[i][j]; // add second quarter into quarter 1
                 l++;
             }
             else if (quarter == 3)
             {
-                saveimage[y][j] = image[i][j];
+                saveimage[y][j] = image[i][j]; // add second quarter into quarter 4
             }
             else if (quarter == 2)
             {
-                saveimage[y][l] = image[i][j];
+                saveimage[y][l] = image[i][j]; // add second quarter into quarter 3
                 l++;
             }
         }
@@ -667,21 +668,21 @@ void third_quarter(int quarter) // Third quarter function..
         {
             if (quarter == 2)
             {
-                saveimage[i][j] = image[i][j];
+                saveimage[i][j] = image[i][j]; // add third quarter into quarter 3
             }
             else if (quarter == 3)
             {
-                saveimage[i][x] = image[i][j];
+                saveimage[i][x] = image[i][j]; // add third quarter into quarter 4
                 x++;
             }
             else if (quarter == 0)
             {
-                saveimage[y][l] = image[i][j];
+                saveimage[y][l] = image[i][j]; // add third quarter into quarter 1
                 l++;
             }
             else if (quarter == 1)
             {
-                saveimage[y][x] = image[i][j];
+                saveimage[y][x] = image[i][j]; // add third quarter into quarter 2
                 x++;
             }
         }
@@ -699,21 +700,21 @@ void fourth_quarter(int quarter) // Fourth quarter function..
         {
             if (quarter == 3)
             {
-                saveimage[i][j] = image[i][j];
+                saveimage[i][j] = image[i][j]; // add fourth quarter into quarter 4
             }
             else if (quarter == 2)
             {
-                saveimage[i][x] = image[i][j];
+                saveimage[i][x] = image[i][j]; // add fourth quarter into quarter 3
                 x++;
             }
             else if (quarter == 0)
             {
-                saveimage[y][x] = image[i][j];
+                saveimage[y][x] = image[i][j]; // add fourth quarter into quarter 1
                 x++;
             }
             else if (quarter == 1)
             {
-                saveimage[y][l] = image[i][j];
+                saveimage[y][l] = image[i][j]; // add fourth quarter into quarter 2
                 l++;
             }
         }
@@ -727,6 +728,8 @@ void shuffle_photo() {                      // Main Filter function..
     string choose;
     cout << "Enter New order of quarters : ";
     cin >> choose;
+    //check if there's a duplication or no ...
+
     for (int i = 0 ; i < choose.length() ;i++)
         {
         for (int y = 0 ; y < 4 ; y++)
@@ -735,7 +738,7 @@ void shuffle_photo() {                      // Main Filter function..
                 {
                     if (choose[1] != choose[2] && choose[1] != choose[3] && choose[2] != choose[3])
                     {
-                        if ( choose[i] == arr[y])
+                        if ( choose[i] == arr[y])    // check if user add a correct numbers..
                         {
                                 check += 1;
                                 continue;
@@ -750,19 +753,19 @@ void shuffle_photo() {                      // Main Filter function..
         {
             if (choose[i] == '1' )
             {
-                first_quarter(i);
+                first_quarter(i); // i => the place of the quarter 1
             }
             else if (choose[i] == '2' )
             {
-                second_quarter(i);
+                second_quarter(i); // i => the place of the quarter 2
             }
             else if (choose[i] == '3' )
             {
-                third_quarter(i);
+                third_quarter(i); // i => the place of the quarter 3
             }
             else if (choose[i] == '4' )
             {
-                fourth_quarter(i);
+                fourth_quarter(i); // i => the place of the quarter 4
             }
         }
     }
@@ -787,26 +790,26 @@ void mainmessage(){
         cout << "[1] Black And White Filter \n"
              << "[2] Invert Filter \n"
              << "[3] Merge Filter \n"
-             << "[4] Flip Image \n"
-             << "[5] Rotate Image \n"
-             << "[6] Darken and Lighten Image \n"
-             << "[7] Detect Image Edges \n"
-             << "[8] Enlarge Image\n"
-             << "[9] Shrink Image\n"
-             << "[a] Mirror 1/2 Image\n"
-             << "[b] Shuffle Image\n"
-             << "[c] Blur Image\n"
+             << "[4] Flip Filter \n"
+             << "[5] Rotate Filter \n"
+             << "[6] Darken and Lighten Filter \n"
+             << "[7] Detect Edges Filter \n"
+             << "[8] Enlarge Filter\n"
+             << "[9] Shrink Filter\n"
+             << "[a] Mirror 1/2 Filter\n"
+             << "[b] Shuffle Filter\n"
+             << "[c] Blur Filter\n"
 
              << "[0] Exit \n=> ";
         cin >> choosing;
         if(choosing == "0")
         {
-            cout << "See You Next Time ..." << endl;
+            cout << "See You Next Time ..." << endl; // if user choose exit
             break;
         }
         else if (choosing == "1")
         {
-            cout << "\n=> Black And White FIlter" << endl;
+            cout << "\n=> Black And White Filter" << endl;
             black_white();
             break;
         }
@@ -848,31 +851,31 @@ void mainmessage(){
         }
         else if (choosing == "8")
         {
-            cout << "\n=> Enlarge Image" << endl;
+            cout << "\n=> Enlarge Filter" << endl;
             enlarge_photo();
             break;
         }
         else if(choosing == "9")
         {
-            cout << "\n=> Shrink Image" << endl;
+            cout << "\n=> Shrink Filter" << endl;
             do_shrink();
             break;
         }
         else if(choosing == "a")
         {
-            cout << "\n=> Mirror Image" << endl;
+            cout << "\n=> Mirror Filter" << endl;
             do_mirror();
             break;
         }
         else if (choosing == "b")
         {
-            cout << "\n=> Shuffle Image" << endl;
+            cout << "\n=> Shuffle Filter" << endl;
             shuffle_photo();
             break;
         }
         else if(choosing == "c")
         {
-            cout << "\n=> Blur Image" << endl;
+            cout << "\n=> Blur Filter" << endl;
             do_blur();
             break;
         }
