@@ -19,8 +19,8 @@
 [c] Blur Image<br />
 <br />**
 
-> *  **[PHOTOSHOP.CPP FOR GRAYSCALE PHOTOS]<br />**
-> * **[PHOTOSHOP-BONUS.CPP FOR COLORED PHOTOS]<br />**
+> *  **PHOTOSHOP.CPP FOR GRAYSCALE PHOTOS<br />**
+> * **PHOTOSHOP-BONUS.CPP FOR COLORED PHOTOS<br />**
 ## Additional Info
 
 - **[You should add all files in one folder and add the image in same folder]**
