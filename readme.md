@@ -26,6 +26,9 @@
 - **[You should add all files in one folder and add the image in same folder]**
 - **[make sure that you add the correct name of image]**
  
+## Functions diagram:
+![b872ad20-4352-483c-9312-37491d31247c](https://user-images.githubusercontent.com/90706154/168390369-52afa8e5-f1a8-4e03-88c8-4c318661f7f0.jpg)
+
 
 ## Example
 | GrayScale PHOTO -1   |  GrayScale PHOTO -2      | Color Photo - 1 | Color Photo - 2 |
